@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD MONEY</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            width : 300px;
+            margin-top: 15px;
+        }
+        .submit-form{
+            background-color: ghostwhite;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+{% include "index.html" %}
+<div class="container">
+<form action="/savemny/" method="post">
+{% csrf_token %}
+
+ <div class="form-group">
+      <label for="sel1">choose friends:</label>
+      <select class="form-control" multiple name="friends" required>
+    {% for x in mes %}
+        <option>{{ x.name }}</option>
+    {% endfor %}
+     </select>
+ </div>
+<div>
+    <div class="form-group">
+      <input type="date" name="date" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="tel" name="amnt" class="form-control" placeholder="amount" required >
+    </div>
+    <div class="form-group">
+      <input type="text" name="purpose" class="form-control" placeholder="description">
+    </div>
+    <button type="submit" class="btn btn-default">Send</button>
+</div>
+
+</form>
+</div>
+<div class="container">
+<table class="table table-striped">
+ {% if mes %}
+     <h2 style="font-size: 18px;text-transform: capitalize;">friends list</h2>
+    {% for x in mes %}
+    <tr>
+        <td>
+            {{ x.name| upper }}
+        </td>
+    <td><form method="post" action="/deletefrnd/" style="width: 3px;">
+                      {% csrf_token %}
+                      <input class='submit-form' type="submit" value="delete">
+                      <input type="hidden" value="{{ x.cno}}" name="del">
+                      </form>
+                  </td>
+    </tr>
+    {% endfor %}
+   {% else %}
+     <h4>No friends</h4>
+{% endif %}
+</table>
+</div>
+</body>
+</html>

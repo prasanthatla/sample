@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHOW MONEY</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        .container {
+            width: 787px;
+            margin-top: 15px;
+        }
+        .submit-form{
+            background-color: ghostwhite;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            text-transform: capitalize;
+        }
+    </style>
+</head>
+<body>
+{% include "index.html" %}
+<div class="container">
+<form action="/show/" method="post">
+{% csrf_token %}
+
+     <div class="form-group">
+      <label for="sel1">choose friends:</label>
+      <select class="form-control"  name="friends" required>
+    {% for x in mes %}
+        <option>{{ x.name }}</option>
+    {% endfor %}
+     </select>
+    </div>
+    <div style="width:8%; margin:0 auto;">
+        <input style="text-transform: capitalize;" class="btn btn-info" type="submit"  value="show">
+    </div>
+</form>
+</div>
+{% if det %}
+    <div class="container">
+        <table class="table table-striped">
+            <tr>
+                <th>NAME</th>
+                <th>DATE</th>
+                <th>PURPOSE</th>
+                <th>MONEY</th>
+                <th></th>
+            </tr>
+            {% for x in det%}
+            <tr>
+                <td>
+                    {{ x.name|upper }}
+                </td> <td>
+                    {{ x.date }}
+                </td> <td>
+                    {{ x.purpose|upper }}
+                </td>
+                <td>
+                    {{ x.expensive}}
+                </td>
+            <td><form method="post" action="/deletemny/">
+                              {% csrf_token %}
+                              <input class='submit-form' type="submit" value="delete">
+                              <input type="hidden" value="{{ x.id}}" name="del">
+                              </form>
+                          </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+   <div style="width: 50%;margin: 0 auto;text-align: center;margin-top: 15px;text-transform: capitalize;" class="alert alert-danger">
+      no data
+   </div>
+{% endif %}
+</body>
+</html>

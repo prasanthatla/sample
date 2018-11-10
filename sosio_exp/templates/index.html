@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOME</title>
+    <style>
+        body {    margin-top: 31px; }
+        .main-div{
+            display: inline-block;
+            width: 80%;    width: 87%;
+            display: inline;
+            float: left;
+        }
+        a {
+                text-decoration: none;
+                padding:0px 25px;
+                color: #3593ff;
+                font-family: Arial;
+            }
+       .button {
+            background-color: white;
+            width: 161px;
+            border: 2px solid #3593ff;
+            height: 34px;
+            border-radius: 29px;
+            color: #3593ff;
+        }
+    </style>
+</head>
+<body>
+<div class="main-div">
+    <a href="/frnd/" >Add friends</a>
+    <a href="/mny/">Add amount</a>
+    <a href="/showmny/" >Show amount</a>
+</div>
+<div>
+    <form method="post" action="/deletealldata/">
+    {% csrf_token %}
+    <table>
+    <tr>
+        <td>
+            <input class="button" type="submit" value="Reset all data">
+        </td>
+    </tr>
+    </table>
+    </form>
+</div>
+</body>
+</html>
